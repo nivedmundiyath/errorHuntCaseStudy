@@ -59,6 +59,8 @@ app.get('/',function(req,res){
 
 //Part 1 Point 5
 
-app.listen(3000,()=>{
-    console.log("Server Ready on 3000");
-});
+//Commented for Heroku deployment
+
+// app.listen(3000,()=>{
+//     console.log("Server Ready on 3000");
+// });
