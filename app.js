@@ -36,6 +36,8 @@ const app = new express;
 // Connect with DB
 // process.env['dBURI'] = 'mongodb+srv://admin:manage@clusterlibrary.wgitnvq.mongodb.net/clusterlibrary?retryWrites=true&w=majority';
 
+const port = process.env.PORT || 3000
+
 
 
 app.set('views','./src/views'); 
@@ -66,6 +68,6 @@ app.get('/',function(req,res){
 
 //Commented for Heroku deployment
 
-// app.listen(3000,()=>{
-//     console.log("Server Ready on 3000");
-// });
+app.listen(port,()=>{
+    console.log("Server Ready on 3000");
+});
