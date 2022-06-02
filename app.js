@@ -4,6 +4,7 @@ const cors = require('cors');
 //Part 1 Point 2
 const bodyParser= require('body-parser');
 
+
 const nav= [
     {
         link:"/books",
@@ -31,6 +32,10 @@ const booksRouter = require('./src/routes/booksroute');
 const authorsRouter = require('./src/routes/authorsroute');
 
 const app = new express; 
+
+// Connect with DB
+// process.env['dBURI'] = 'mongodb+srv://admin:manage@clusterlibrary.wgitnvq.mongodb.net/clusterlibrary?retryWrites=true&w=majority';
+
 
 
 app.set('views','./src/views'); 
