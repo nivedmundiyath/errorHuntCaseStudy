@@ -2,15 +2,16 @@ const express = require('express');
 const authorsRouter = express.Router();
 // const authors = require('../data/authors');
 const authordata = require('../model/AuthorModel');
+const checkAuth = require('../../middleware')
+
 
 
 
 //router to render authors page
 authorsRouter.get('/',function(req,res){
-
+    
     authordata.find() 
     .then(function (authors) {
-
     res.render('authors',{
         authors
     });
@@ -21,7 +22,7 @@ authorsRouter.get('/',function(req,res){
 
 
 //router to render add author page
-authorsRouter.get('/addauthor',function(req,res){
+authorsRouter.get('/addauthor',checkAuth,function(req,res){
     res.render('addauthor',{});
 
 });
@@ -30,11 +31,11 @@ authorsRouter.get('/addauthor',function(req,res){
 
 
 //router to add author
-authorsRouter.post('/add', function (req, res) {
-
+authorsRouter.post('/add', checkAuth,function (req, res) {
+    //Part 2 Point 8
     var item={
         title:req.body.title,
-        image:req.body.images,
+        image:req.body.image,
         about:req.body.about
     }
     console.log(item)  ;
@@ -63,11 +64,12 @@ authorsRouter.get('/:id',function(req,res){
 
 
 
-//router to delete author
-authorsRouter.post('/delete', function (req, res) {
+// router to delete author
+//Part 2 point 9
+
+authorsRouter.delete('/delete', checkAuth,function (req, res) {
 
     const id = req.body.id;  
-
     authordata.findOneAndDelete({ _id: id })
         .then(function () {
 
@@ -79,7 +81,10 @@ authorsRouter.post('/delete', function (req, res) {
 
 
 //router to edit author
-authorsRouter.post('/edit', function (req, res) {
+//Part 2 point 9
+
+
+authorsRouter.put('/edit', checkAuth,function (req, res) {
 
     authordata.findById(req.body.id, function(err, data){
         if (err) {
@@ -92,24 +97,11 @@ authorsRouter.post('/edit', function (req, res) {
 })
 
 
-// authorsRouter.post('/edit', function (req, res) {
-
-//     authordata.findById(req.body.id, function(err, data){
-//         if (err) {
-//             throw err;
-//         }
-//         else {
-//             res.render('editauthor', {data})
-//         }
-//     })
-// })
-
-
 
 //router to update author
 //Part 2 point 9
 
-authorsRouter.post('/update', function (req, res) {
+authorsRouter.put('/update', checkAuth,function (req, res) {
 
     authordata.findByIdAndUpdate(req.body.id, { $set: req.body }, function (err, data) {
         if (err) {

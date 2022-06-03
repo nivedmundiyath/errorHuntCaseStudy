@@ -1,6 +1,8 @@
 const express = require('express'); 
 const loginRouter = express.Router();
 const user = require('../data/user');
+const jwt = require('jsonwebtoken'); // Point 2 Point 7- Implemented JWT for authorization - Only for POST, PUT and DELETE method
+
 
 loginRouter.get('/',function(req,res){
 
@@ -11,8 +13,10 @@ loginRouter.get('/',function(req,res){
 
 loginRouter.get("/check",function(req,res){
     var checkuser = {
-        uid:req.param("uid"),
-        pwd:req.param("pwd")
+                //Part 2 Point 10
+
+        uid:req.params("uid"),
+        pwd:req.params("pwd")
     };
     
     console.log(checkuser);
@@ -35,8 +39,18 @@ loginRouter.get("/check",function(req,res){
         console.log(flag);
 
 if(flag==true){
+    //Generating Token - expiry in 90s
+     const jwtToken= jwt.sign({id : checkuser.uid}, 
+        "secret",
+        {
+            expiresIn: 90
+        }
+        
+        );
     // alert("User Verified.Click to continue");
-    res.redirect("/home")
+    // console.log(jwtToken);
+    res.cookie('authorization', jwtToken , {maxAge: 90000});  
+    res.redirect("/home");
 }
 else{
     // alert("User Verification Failed");
@@ -44,7 +58,6 @@ else{
 }
 
 });
-
 
 
 

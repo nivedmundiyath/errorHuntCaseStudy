@@ -1,8 +1,8 @@
 const express = require('express'); 
 const homeRouter = express.Router();
-
+const checkAuth = require('../../middleware')
 homeRouter.get('/',function(req,res){
-    // console.log(process.env.dBURI);
+
     res.render('home',{});
     
 })

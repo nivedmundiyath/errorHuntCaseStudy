@@ -1,6 +1,9 @@
 const express = require('express'); 
 const path = require ('path'); 
 const cors = require('cors');
+//  Part 2 point 9 - Form html doesnot allow PUT and delete. To overide , used method-overide package
+
+var methodOverride  = require("method-override");
 //Part 1 Point 2
 const bodyParser= require('body-parser');
 
@@ -32,6 +35,9 @@ const booksRouter = require('./src/routes/booksroute');
 const authorsRouter = require('./src/routes/authorsroute');
 
 const app = new express; 
+//  Part 2 point 9 
+
+app.use(methodOverride('_method'));
 
 // Connect with DB
 // process.env['dBURI'] = 'mongodb+srv://admin:manage@clusterlibrary.wgitnvq.mongodb.net/clusterlibrary?retryWrites=true&w=majority';

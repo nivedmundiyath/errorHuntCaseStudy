@@ -2,6 +2,8 @@ const express = require('express');
 const booksRouter = express.Router();
 // const books = require('../data/books');
 const bookdata = require('../model/BookModel');
+const checkAuth = require('../../middleware')
+
 
 
 
@@ -30,7 +32,7 @@ booksRouter.get('/addbook',function(req,res){
 
 
 //router to add book
-booksRouter.post('/add', function (req, res) {
+booksRouter.post('/add', checkAuth,function (req, res) {
 
         var item={
             title:req.body.title,
@@ -48,7 +50,7 @@ booksRouter.post('/add', function (req, res) {
 
 
 //router for singlebook
-booksRouter.get('/:id',function(req,res){
+booksRouter.get('/:id', function(req,res){
     const id = req.params.id;
     bookdata.findOne({ _id: id })
             .then(function (book) {
@@ -64,7 +66,9 @@ booksRouter.get('/:id',function(req,res){
 
 
 //router to delete book
-booksRouter.post('/delete', function (req, res) {
+//Part 2 point 9
+
+booksRouter.delete('/delete', checkAuth, function (req, res) {
 
     const id = req.body.id;  
 
@@ -79,7 +83,9 @@ booksRouter.post('/delete', function (req, res) {
 
 
 //router to edit book
-booksRouter.post('/edit', function (req, res) {
+//Part 2 point 9
+
+booksRouter.put('/edit', checkAuth, function (req, res) {
 
     bookdata.findById(req.body.id, function(err, data){
         if (err) {
@@ -94,7 +100,9 @@ booksRouter.post('/edit', function (req, res) {
 
 
 //router to update book
-booksRouter.post('/update', function (req, res) {
+//Part 2 point 9
+
+booksRouter.put('/update', checkAuth,function (req, res) {
 
     bookdata.findByIdAndUpdate(req.body.id, { $set: req.body }, function (err, data) {
         if (err) {

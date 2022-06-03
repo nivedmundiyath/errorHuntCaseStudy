@@ -90,12 +90,15 @@
                 <!--Text-->
                 <p class="card-text text-center"><%=author.about%></p>
 
-                <form action="/authors/edit" method="POST">
+                <!-- Part 2 point 9 -->
+
+                <form action="/authors/edit?_method=PUT" method="POST">
                   <input type="hidden" name="id" value="<%=author._id%>">
                   <button id="editbtn" type="submit" class = "btn btn-success btn-sm" style="float: right;">Edit Author</button>
                   </form>
 
-                  <form action="/authors/delete" method="POST">
+                  <form class="delete" action="/authors/delete?_method=DELETE" method="POST">
+                    <!-- <input type="hidden" name="_method" value="DELETE"> -->
                   <input type="hidden" name="id" value="<%=author._id%>">
                   <button id="dltbtn" type="submit" class = "btn btn-danger btn-sm" style="float: right; margin-right: 25px">Delete Author</button>
                   </form>
@@ -133,8 +136,24 @@
               
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 
+    <!-- <script> 
 
-    
+        const trashcan= document.querySelector('form.delete');
+        trashcan.addEventListener("submit", (e)=>
+          {
+            const endpoint = `/authors/delete/${trashcan.value}`;
+            fetch(endpoint, {
+              method: 'DELETE'
+            })
+            .then((response) => response.json())
+            .then((data)=> window.location.href = data.redirect)
+            .catch(err => console.log(err));
+          }
+
+        )
+
+    </script>
+     -->
 
 
 </body>
